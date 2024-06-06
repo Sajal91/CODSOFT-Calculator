@@ -43,7 +43,7 @@ let numBtnClick = (a) => {
 
 let operatorClick = (o) => {
     operator = o;
-    numArr.push(parseInt(numDisplay.innerHTML));
+    numArr.push(parseFloat(numDisplay.innerHTML));
     miniDisplay.innerHTML = numDisplay.innerHTML + operator;
     numDisplay.innerHTML = "0";
 }
@@ -55,22 +55,25 @@ for(let operatorBtn of operatorBtns) {
 }
 
 equalBtn.addEventListener('click',() => {
-    numArr.push(parseInt(numDisplay.innerHTML));
-    if(operator === "+") {
-        numArr.forEach((element)=>{
-            sumCount += element;
-        });
-        resultNum = sumCount;
-        sumCount = 0;
-    } else if(operator === "-") {
-        resultNum = numArr[0] - numArr[1];
-    } else if(operator === "/") {
-        resultNum = numArr[0] / numArr[1];
-    } else if(operator === "x") {
-        resultNum = numArr[0] * numArr[1];
+    if(numArr.length > 0) {
+        numArr.push(parseFloat(numDisplay.innerHTML));
+        console.log(numDisplay.innerHTML);
+        if(operator === "+") {
+            numArr.forEach((element)=>{
+                sumCount += element;
+            });
+            resultNum = sumCount.toFixed(2);
+            sumCount = 0;
+        } else if(operator === "-") {
+            resultNum = (numArr[0] - numArr[1]).toFixed(2);
+        } else if(operator === "/") {
+            resultNum = (numArr[0] / numArr[1]).toFixed(2);
+        } else if(operator === "x") {
+            resultNum = (numArr[0] * numArr[1]).toFixed(2);
+        }
+        miniDisplay.innerHTML = "";
+        numDisplay.innerHTML = resultNum;
+        resultNum = 0;
+        numArr = [];
     }
-    miniDisplay.innerHTML = "";
-    numDisplay.innerHTML = resultNum;
-    resultNum = 0;
-    numArr = [];
 });
