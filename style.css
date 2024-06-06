@@ -8,17 +8,14 @@ body {
 }
 
 #calc-main-body {
-    /* height: 66vh; */
     display: flex;
     flex-direction: column;
-    /* gap: 0.4rem; */
     border: solid black;
     background-color: white;
 }
 
 #calc-display {
     height: 20vh;
-    /* background-color: rgb(180, 180, 180); */
     background-color: black;
     color: white;
     border-bottom: solid black;
@@ -43,12 +40,8 @@ body {
 
 #btns-display {
     display: grid;
-    /* grid-template-columns: repeat(4, 2); */
-    /* gap: 1%; */
-    /* grid-auto-rows: minmax(100px, auto); */
     grid-template-rows: 20% 20% 20% 20% 20%;
     grid-template-columns: 25% 25% 25% 25%;
-
 }
 
 .operator-btns, #btn-15 {
@@ -118,6 +111,6 @@ body {
 
 @media (min-width: 300px) and (max-width: 469px) {
     #calc-main-body {
-        width: 65%;
+        width: 100%;
     }
 }
