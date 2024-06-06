@@ -40,7 +40,7 @@ let numBtnClick = (a) => {
 let operatorClick = (o) => {
     operator = o;
     numArr.push(parseFloat(numDisplay.innerHTML));
-    miniDisplay.innerHTML = numDisplay.innerHTML + operator;
+    miniDisplay.innerHTML = miniDisplay.innerHTML + numDisplay.innerHTML + operator;
     numDisplay.innerHTML = "0";
 }
 
