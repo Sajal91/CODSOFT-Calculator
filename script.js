@@ -56,7 +56,6 @@ for(let operatorBtn of operatorBtns) {
 equalBtn.addEventListener('click',() => {
     if(numArr.length > 0) {
         numArr.push(parseFloat(numDisplay.innerHTML));
-        console.log(numDisplay.innerHTML);
         if(operator === "+") {
             numArr.forEach((element)=>{
                 sumCount += element;
@@ -76,11 +75,7 @@ equalBtn.addEventListener('click',() => {
             resultNum = productCount.toFixed(2);
             productCount = 1;
         } else if(operator === "/") {
-            numArr.forEach((element)=>{
-                element /= divideCount;
-            });
-            resultNum = divideCount.toFixed(2);
-            divideCount = 1;
+            
         }
         miniDisplay.innerHTML = "";
         numDisplay.innerHTML = resultNum;
