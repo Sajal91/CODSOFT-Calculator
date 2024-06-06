@@ -7,6 +7,9 @@ let miniDisplay = document.querySelector('#mini-display');
 let operatorBtns = document.querySelectorAll('.operator-btns');
 let resultNum;
 let sumCount = 0;
+let subCount = 0;
+let productCount = 1;
+let divideCount = 1;
 
 let numArr = [];
 let operator;
@@ -61,11 +64,23 @@ equalBtn.addEventListener('click',() => {
             resultNum = sumCount.toFixed(2);
             sumCount = 0;
         } else if(operator === "-") {
-            resultNum = (numArr[0] - numArr[1]).toFixed(2);
-        } else if(operator === "/") {
-            resultNum = (numArr[0] / numArr[1]).toFixed(2);
+            numArr.forEach((element)=>{
+                subCount += element;
+            });
+            resultNum = subCount.toFixed(2);
+            subCount = 0;
         } else if(operator === "x") {
-            resultNum = (numArr[0] * numArr[1]).toFixed(2);
+            numArr.forEach((element)=>{
+                productCount *= element;
+            });
+            resultNum = productCount.toFixed(2);
+            productCount = 1;
+        } else if(operator === "/") {
+            numArr.forEach((element)=>{
+                element /= divideCount;
+            });
+            resultNum = divideCount.toFixed(2);
+            divideCount = 1;
         }
         miniDisplay.innerHTML = "";
         numDisplay.innerHTML = resultNum;
