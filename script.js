@@ -6,9 +6,9 @@ let equalBtn = document.querySelector('#btn-15');
 let miniDisplay = document.querySelector('#mini-display');
 let operatorBtns = document.querySelectorAll('.operator-btns');
 let operatorCount = 0;
+let equalBtnToggler = false;
 
 let numArr = [];
-let newArr = [];
 let operator = [];
 
 cancelBtn.addEventListener('click',() => {
@@ -63,15 +63,19 @@ let performCalculation = (x) => {
     miniDisplay.innerHTML = resultNum;
     numArr = [];
     numArr.push(resultNum);
-    newArr = [];
-    newArr.push(resultNum);
     console.log(numArr);
     console.log(resultNum);
+    if(equalBtnToggler == true) {
+        numDisplay.innerHTML = resultNum;
+        miniDisplay.innerHTML = "";
+        equalBtnToggler = false;
+    }
 }
 
 let operatorClick = (o) => {
     operator.push(o);
     numArr.push(parseFloat(numDisplay.innerHTML));
+    console.log(miniDisplay.innerHTML);
     miniDisplay.innerHTML = miniDisplay.innerHTML + numDisplay.innerHTML + o;
     // console.log(numArr);
     // console.log(operator);
@@ -89,10 +93,11 @@ for(let operatorBtn of operatorBtns) {
 }
 
 equalBtn.addEventListener('click',() => {
+    equalBtnToggler = true;
     if(numArr.length == 1 && numDisplay.innerHTML !== "0") {
         numArr.push(parseFloat(numDisplay.innerHTML));
         performCalculation(operator.length-1);
-        console.log(operator[operator.length-1]);
     }
-    numDisplay.innerHTML = newArr[0];
+    // numDisplay.innerHTML = newArr[0];
+    // miniDisplay.innerHTML = "";
 });
