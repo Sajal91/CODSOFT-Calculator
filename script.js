@@ -25,8 +25,7 @@ allCancelBtn.addEventListener('click',() => {
     operator = [];
     newArr = [];
     operatorCount = 0;
-    // operatorIterator = 0;
-    // resultNum = 0;
+    equalBtnToggler = false;
 });
 
 for(let numBtn of numBtns) {
@@ -43,44 +42,58 @@ let numBtnClick = (a) => {
     }
 }
 
+let decimalCheck = (value) => {
+    if(Math.ceil(value) != Math.floor(value)) {
+        return value.toFixed(2);
+    } else {
+        return value;
+    }
+}
+
 
 let performCalculation = (x) => {
     let resultNum;
     switch(operator[x]) {
         case '+':
-            resultNum = numArr[0] + numArr[1];
+            resultNum = decimalCheck(numArr[0] + numArr[1]);
             break;
         case '-':
-            resultNum = numArr[0] - numArr[1];
+            resultNum = decimalCheck(numArr[0] - numArr[1]);
             break;
         case 'x':
-            resultNum = numArr[0] * numArr[1];
+            resultNum = decimalCheck(numArr[0] * numArr[1]);
             break;
         case '/':
-            resultNum = numArr[0] / numArr[1];
+            resultNum = decimalCheck(numArr[0] / numArr[1]);
             break;
     }
-    miniDisplay.innerHTML = resultNum;
-    numArr = [];
-    numArr.push(resultNum);
-    console.log(numArr);
-    console.log(resultNum);
     if(equalBtnToggler == true) {
         numDisplay.innerHTML = resultNum;
         miniDisplay.innerHTML = "";
-        equalBtnToggler = false;
+    } else {
+        miniDisplay.innerHTML = resultNum;
+        numArr = [];
+        numArr.push(resultNum);
     }
 }
 
 let operatorClick = (o) => {
     operator.push(o);
+    console.log(numDisplay.innerHTML);
     numArr.push(parseFloat(numDisplay.innerHTML));
-    console.log(miniDisplay.innerHTML);
-    miniDisplay.innerHTML = miniDisplay.innerHTML + numDisplay.innerHTML + o;
-    // console.log(numArr);
-    // console.log(operator);
-    if(operatorCount >= 1) {
-        performCalculation(operator.length-2);
+    console.log(numArr);
+    console.log(operator);
+    if(equalBtnToggler == true) {
+        miniDisplay.innerHTML = numDisplay.innerHTML;
+        if(operator.length > 1) {
+            performCalculation(operator.length-2);
+        }
+        equalBtnToggler = false;
+    } else {
+        miniDisplay.innerHTML = miniDisplay.innerHTML + numDisplay.innerHTML + o;
+        if(operatorCount >= 1) {
+            performCalculation(operator.length-2);
+        }
     }
     numDisplay.innerHTML = "0";
     operatorCount++;
@@ -98,6 +111,7 @@ equalBtn.addEventListener('click',() => {
         numArr.push(parseFloat(numDisplay.innerHTML));
         performCalculation(operator.length-1);
     }
-    // numDisplay.innerHTML = newArr[0];
-    // miniDisplay.innerHTML = "";
+    operator = [];
+    numArr = [];
+    miniDisplay.innerHTML = "";
 });
