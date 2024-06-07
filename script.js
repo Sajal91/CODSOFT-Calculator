@@ -5,12 +5,10 @@ let cancelBtn = document.querySelector('#btn-16');
 let equalBtn = document.querySelector('#btn-15');
 let miniDisplay = document.querySelector('#mini-display');
 let operatorBtns = document.querySelectorAll('.operator-btns');
-let sumCount = 0;
-let subCount = 0;
-let productCount = 1;
-let divideCount = 1;
+let operatorCount = 0;
 
 let numArr = [];
+let newArr = [];
 let operator = [];
 
 cancelBtn.addEventListener('click',() => {
@@ -23,6 +21,12 @@ cancelBtn.addEventListener('click',() => {
 allCancelBtn.addEventListener('click',() => {
     numDisplay.innerHTML = "0";
     miniDisplay.innerHTML = "";
+    numArr = [];
+    operator = [];
+    newArr = [];
+    operatorCount = 0;
+    // operatorIterator = 0;
+    // resultNum = 0;
 });
 
 for(let numBtn of numBtns) {
@@ -39,43 +43,40 @@ let numBtnClick = (a) => {
     }
 }
 
-let operatorCount = 0;
-let operatorIterator = 0;
+
+let performCalculation = (x) => {
+    let resultNum;
+    switch(operator[x]) {
+        case '+':
+            resultNum = numArr[0] + numArr[1];
+            break;
+        case '-':
+            resultNum = numArr[0] - numArr[1];
+            break;
+        case 'x':
+            resultNum = numArr[0] * numArr[1];
+            break;
+        case '/':
+            resultNum = numArr[0] / numArr[1];
+            break;
+    }
+    miniDisplay.innerHTML = resultNum;
+    numArr = [];
+    numArr.push(resultNum);
+    newArr = [];
+    newArr.push(resultNum);
+    console.log(numArr);
+    console.log(resultNum);
+}
 
 let operatorClick = (o) => {
     operator.push(o);
     numArr.push(parseFloat(numDisplay.innerHTML));
-    // console.log(numArr);
     miniDisplay.innerHTML = miniDisplay.innerHTML + numDisplay.innerHTML + o;
+    // console.log(numArr);
+    // console.log(operator);
     if(operatorCount >= 1) {
-        if(operator[operatorIterator] == "+") {
-            numArr.forEach((element)=>{
-                sumCount += element;
-            });
-            numArr = [];
-            operatorIterator++;
-            numArr.push(sumCount);
-            sumCount = 0;
-            // console.log(numArr);
-        } else if(operator[operatorIterator] == "-") {
-            subCount = numArr[0] - numArr[1];
-            numArr = [];
-            numArr.push(subCount);
-            // console.log(numArr);
-            operatorIterator++;
-        } else if(operator[operatorIterator] == "x") {
-            productCount = numArr[0] * numArr[1];
-            numArr = [];
-            numArr.push(productCount);
-            // console.log(numArr);
-            operatorIterator++;
-        } else if(operator[operatorIterator] == "/") {
-            divideCount = numArr[0] / numArr[1];
-            numArr = [];
-            numArr.push(divideCount);
-            // console.log(numArr);
-            operatorIterator++;
-        }
+        performCalculation(operator.length-2);
     }
     numDisplay.innerHTML = "0";
     operatorCount++;
@@ -88,39 +89,10 @@ for(let operatorBtn of operatorBtns) {
 }
 
 equalBtn.addEventListener('click',() => {
-    // if(numArr.length > 0) {
-        // console.log('=');
-        // console.log(operator);
+    if(numArr.length == 1 && numDisplay.innerHTML !== "0") {
         numArr.push(parseFloat(numDisplay.innerHTML));
-        // console.log(numArr);
-        if(operator[operator.length-1] == "+") {
-            let resultNum;
-            resultNum = numArr[0] + numArr[1];
-            numArr = [];
-            // numArr.push(resultNum);
-            numDisplay.innerHTML = resultNum;
-        } else if(operator[operator.length-1] == "-") {
-            let resultNum;
-            resultNum = numArr[0] - numArr[1];
-            numArr = [];
-            // numArr.push(resultNum);
-            numDisplay.innerHTML = resultNum;
-        } else if(operator[operator.length-1] == "x") {
-            let resultNum;
-            resultNum = numArr[0] * numArr[1];
-            numArr = [];
-            // numArr.push(resultNum);
-            numDisplay.innerHTML = resultNum;
-        } else if(operator[operator.length-1] == "/") {
-            let resultNum;
-            resultNum = numArr[0] / numArr[1];
-            numArr = [];
-            // numArr.push(resultNum);
-            numDisplay.innerHTML = resultNum;
-        }
-        miniDisplay.innerHTML = "";
-        numArr = [];
-        operator = [];
-        operatorIterator = 0;
-    // }
+        performCalculation(operator.length-1);
+        console.log(operator[operator.length-1]);
+    }
+    numDisplay.innerHTML = newArr[0];
 });
